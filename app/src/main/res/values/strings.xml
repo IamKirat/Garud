@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">GARUD</string>
+    <string name="notification_listener_service_name">GARUD Notification Threat Scanner</string>
+    <string name="notification_listener_service_description">Analyzes incoming notifications on-device to protect you against phishing, OTP theft, financial scams, and fraudulent messages.</string>
+</resources>

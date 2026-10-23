@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- GARUD Design System Colors -->
+    <color name="garud_warm_cream">#F7F6F2</color>
+    <color name="garud_near_black">#20211F</color>
+    <color name="garud_forest_green">#286247</color>
+    <color name="garud_muted_gray">#70716C</color>
+    <color name="garud_amber">#946315</color>
+    <color name="garud_warning_red">#B33A32</color>
+    
+    <color name="black">#20211F</color>
+    <color name="white">#FFFFFF</color>
+</resources>

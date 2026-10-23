@@ -1,0 +1,57 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "GARUD Knowledge Chunk Metadata",
+  "oneOf": [
+    { "$ref": "#/$defs/verifiedEvidence" },
+    { "$ref": "#/$defs/syntheticGuidance" }
+  ],
+  "properties": {
+    "language": { "type": "string", "pattern": "^[a-z]{2,3}(-[A-Z]{2})?$" }
+  },
+  "$defs": {
+    "verifiedEvidence": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["chunk_id", "source_id", "title", "publisher", "source_url", "content_hash", "license", "review_status", "category", "text"],
+      "allOf": [{
+        "if": { "properties": { "review_status": { "const": "VERIFIED" } }, "required": ["review_status"] },
+        "then": { "required": ["reviewed_at", "timestamp"] }
+      }],
+      "properties": {
+        "chunk_id": { "type": "string", "minLength": 1 },
+        "source_id": { "type": "string", "minLength": 1 },
+        "title": { "type": "string", "minLength": 1 },
+        "publisher": { "type": "string", "minLength": 1 },
+        "source_url": { "type": "string", "format": "uri", "pattern": "^https://" },
+        "content_hash": { "type": "string", "pattern": "^[a-fA-F0-9]{64}$" },
+        "license": { "type": "string", "minLength": 1 },
+        "timestamp": { "type": "integer", "minimum": 0 },
+        "review_status": { "enum": ["VERIFIED", "PENDING", "UNVERIFIED"] },
+        "reviewed_at": { "type": "integer", "minimum": 0 },
+        "language": { "type": "string", "pattern": "^[a-z]{2,3}(-[A-Z]{2})?$" },
+        "category": { "type": "string", "minLength": 1 },
+        "text": { "type": "string", "minLength": 1 }
+      }
+    },
+    "syntheticGuidance": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["chunk_id", "topic", "title", "text", "content_hash", "source_type", "source_url", "ingested_at", "embedding_model", "source_checked_at", "review_status", "language", "source_license"],
+      "properties": {
+        "chunk_id": { "type": "string", "pattern": "^garud-notif-[0-9]{3}$" },
+        "topic": { "type": "string", "minLength": 1 },
+        "title": { "type": "string", "minLength": 1 },
+        "text": { "type": "string", "minLength": 1 },
+        "content_hash": { "type": "string", "pattern": "^[a-f0-9]{64}$" },
+        "source_type": { "const": "synthetic_guidance" },
+        "source_url": { "type": "null" },
+        "ingested_at": { "type": ["integer", "null"], "minimum": 0 },
+        "embedding_model": { "type": ["string", "null"] },
+        "source_checked_at": { "type": "null" },
+        "review_status": { "const": "synthetic" },
+        "language": { "const": "en" },
+        "source_license": { "type": "null" }
+      }
+    }
+  }
+}
